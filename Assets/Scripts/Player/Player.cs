@@ -26,6 +26,36 @@ public class Player : MonoBehaviour
         MovementInput = playerVel;
     }
 
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.CompareTag("NPC"))
+    //    {
+    //        Debug.Log("Player touched NPC");
+
+    //        SpawnNPC npc = other.GetComponentInParent<SpawnNPC>();
+    //        if (npc != null)
+    //        {
+    //            Debug.Log("NPC detected");
+    //        }
+    //    }
+    //}
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Triggered with: " + other.name);
+
+        if (other.CompareTag("NPC"))
+        {
+            Debug.Log("Player collided with NPC");
+
+            SpawnNPC npc = other.GetComponentInParent<SpawnNPC>();
+            if (npc != null)
+            {
+                // interact with NPC here
+            }
+        }
+    }
+
     private void FindMoveDir()
     {
         if (Keyboard.current.dKey.isPressed ||
