@@ -73,18 +73,12 @@ float fbm(float2 p)
 // ---------- Map noise to biome ----------
 float4 BiomeColor(float n)
 {
-    if (n < 0.3)
-        return _OceanColor;
-    else if (n < 0.35)
-        return _BeachColor;
-    else if (n < 0.6)
-        return _GrassColor;
-    else if (n < 0.75)
-        return _ForestColor;
-    else if (n < 0.9)
-        return _MountainColor;
-    else
-        return _SnowColor;
+    if (n < 0.3) return _OceanColor;
+    else if (n < 0.35) return _BeachColor;
+    else if (n < 0.6) return _GrassColor;
+    else if (n < 0.75) return _ForestColor;
+    else if (n < 0.9) return _MountainColor;
+    else return _SnowColor;
 }
 
 // ---------- Compute shader main ----------

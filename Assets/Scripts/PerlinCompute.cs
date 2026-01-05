@@ -3,10 +3,8 @@
 public class PerlinCompute : MonoBehaviour
 {
     [Header("Compute Shader Settings")]
-    public ComputeShader shader;
-    public RenderTexture target;
-    public int width = 1024;
-    public int height = 1024;
+    [SerializeField] private ComputeShader shader;
+    [SerializeField] private RenderTexture target;
 
     [Header("Noise Settings")]
     public float scale = 5f;
@@ -15,15 +13,19 @@ public class PerlinCompute : MonoBehaviour
     public float persistence = 0.5f;
 
     [Header("Biome Colors")]
-    public Color oceanColor = new Color(0f, 0.3f, 0.7f);
-    public Color beachColor = new Color(0.9f, 0.85f, 0.6f);
-    public Color grassColor = new Color(0.1f, 0.8f, 0.2f);
-    public Color forestColor = new Color(0f, 0.5f, 0.1f);
-    public Color mountainColor = new Color(0.5f, 0.5f, 0.5f);
-    public Color snowColor = new Color(1f, 1f, 1f);
+    public Color oceanColor = new(0f, 0.3f, 0.7f);
+    public Color beachColor = new(0.9f, 0.85f, 0.6f);
+    public Color grassColor = new(0.1f, 0.8f, 0.2f);
+    public Color forestColor = new(0f, 0.5f, 0.1f);
+    public Color mountainColor = new(0.5f, 0.5f, 0.5f);
+    public Color snowColor = new(1f, 1f, 1f);
+
+
+    private readonly int width = Screen.width;
+    private readonly int height = Screen.height;
 
     [Header("Display Material")]
-    public Material displayMat;
+    [SerializeField] private Material displayMat;
 
     void Start()
     {
