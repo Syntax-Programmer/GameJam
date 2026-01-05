@@ -45,6 +45,8 @@ public class Road : MonoBehaviour
 
     void RecycleTiles()
     {
+
+        if (tiles.Count <= 0) { return; }
         Transform rightMost = tiles[0];
         foreach (Transform t in tiles)
             if (t.position.x > rightMost.position.x)
