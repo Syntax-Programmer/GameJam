@@ -10,7 +10,15 @@ float _TimeScale;
 int _Octaves;
 float _Persistence;
 
-// Hash function for gradients
+// Biome colors (you can tweak in Unity)
+float4 _OceanColor = float4(0.0, 0.3, 0.7, 1.0);
+float4 _BeachColor = float4(0.9, 0.85, 0.6, 1.0);
+float4 _GrassColor = float4(0.1, 0.8, 0.2, 1.0);
+float4 _ForestColor = float4(0.0, 0.5, 0.1, 1.0);
+float4 _MountainColor = float4(0.5, 0.5, 0.5, 1.0);
+float4 _SnowColor = float4(1.0, 1.0, 1.0, 1.0);
+
+// ---------- Noise functions ----------
 float2 hash2(float2 p)
 {
     float n = sin(dot(p, float2(127.1, 311.7))) * 43758.5453;
@@ -62,6 +70,24 @@ float fbm(float2 p)
     return value / maxValue;
 }
 
+// ---------- Map noise to biome ----------
+float4 BiomeColor(float n)
+{
+    if (n < 0.3)
+        return _OceanColor;
+    else if (n < 0.35)
+        return _BeachColor;
+    else if (n < 0.6)
+        return _GrassColor;
+    else if (n < 0.75)
+        return _ForestColor;
+    else if (n < 0.9)
+        return _MountainColor;
+    else
+        return _SnowColor;
+}
+
+// ---------- Compute shader main ----------
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
@@ -76,7 +102,8 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     uv += _Time * _TimeScale;
 
     float n = fbm(uv);
-    n = n * 0.5 + 0.5; // normalize 0-1
+    n = n * 0.5 + 0.5; // normalize to 0-1
 
-    Result[id.xy] = float4(n, n, n, 1);
+    // Map to biome color
+    Result[id.xy] = BiomeColor(n);
 }
